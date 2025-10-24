@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Impact - Meauxbility</title>
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <!-- Logo Preload -->
+  <link rel="preload" as="image" href="https://cdn.shopify.com/s/files/1/0685/1654/4672/files/meauxbility_logo_540.webp?v=1760648661" type="image/webp">
+  <!-- Styles -->
+  <link rel="stylesheet" href="/fred/css/header.css">
+  <link rel="stylesheet" href="/fred/css/global.css">
+  <link rel="stylesheet" href="/fred/css/footer.css">
+  <!-- Component Loader -->
+  <script src="/fred/js/load-components.js"></script>
+  <style>
+    body {
+      padding-top: var(--nav-h);
+    }
+    
+    /* Impact Page Styles */
+    .impact-hero {
+      background: linear-gradient(135deg, #FF6B35 0%, #9B59B6 100%);
+      color: white;
+      padding: 120px 0 80px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .impact-hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+      opacity: 0.3;
+    }
+    
+    .impact-hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    .impact-hero h1 {
+      font-size: clamp(48px, 8vw, 72px);
+      font-weight: 900;
+      margin-bottom: 24px;
+      letter-spacing: -0.02em;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+    
+    .impact-hero p {
+      font-size: clamp(18px, 3vw, 24px);
+      font-weight: 500;
+      margin-bottom: 32px;
+      opacity: 0.95;
+      line-height: 1.6;
+    }
+    
+    .impact-hero .cta-button {
+      display: inline-block;
+      background: rgba(255,255,255,0.2);
+      color: white;
+      padding: 16px 32px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 18px;
+      border: 2px solid rgba(255,255,255,0.3);
+      transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+      backdrop-filter: blur(10px);
+    }
+    
+    .impact-hero .cta-button:hover {
+      background: rgba(255,255,255,0.3);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+    }
+    
+    .impact-stats {
+      padding: 80px 20px;
+      background: #f8f9fa;
+    }
+    
+    .impact-stats h2 {
+      text-align: center;
+      font-size: clamp(36px, 6vw, 48px);
+      font-weight: 800;
+      margin-bottom: 48px;
+      color: #0C2D31;
+      letter-spacing: -0.02em;
+    }
+    
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 32px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    
+    .stat-card {
+      background: white;
+      border-radius: 20px;
+      padding: 40px 32px;
+      text-align: center;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+      border: 1px solid rgba(255,107,53,0.1);
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+    }
+    
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #FF6B35, #339999);
+    }
+    
+    .stat-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.15);
+    }
+    
+    .stat-number {
+      font-size: clamp(48px, 8vw, 72px);
+      font-weight: 900;
+      color: #FF6B35;
+      margin-bottom: 16px;
+      line-height: 1;
+    }
+    
+    .stat-label {
+      font-size: 18px;
+      font-weight: 600;
+      color: #0C2D31;
+      margin-bottom: 8px;
+    }
+    
+    .stat-description {
+      color: #546a70;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+    
+    .donation-tiers {
+      padding: 80px 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .donation-tiers h2 {
+      text-align: center;
+      font-size: clamp(36px, 6vw, 48px);
+      font-weight: 800;
+      margin-bottom: 48px;
+      color: #0C2D31;
+      letter-spacing: -0.02em;
+    }
+    
+    .tiers-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 32px;
+      margin-bottom: 48px;
+    }
+    
+    .tier-card {
+      background: white;
+      border-radius: 20px;
+      padding: 40px 32px;
+      text-align: center;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+      border: 2px solid rgba(255,107,53,0.1);
+      transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .tier-card:hover {
+      transform: translateY(-8px);
+      border-color: #FF6B35;
+      box-shadow: 0 16px 48px rgba(255,107,53,0.2);
+    }
+    
+    .tier-card.featured {
+      border-color: #FF6B35;
+      background: linear-gradient(135deg, rgba(255,107,53,0.05), rgba(51,153,153,0.05));
+    }
+    
+    .tier-card.featured::before {
+      content: 'Most Popular';
+      position: absolute;
+      top: 20px;
+      right: -30px;
+      background: #FF6B35;
+      color: white;
+      padding: 4px 40px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      transform: rotate(45deg);
+    }
+    
+    .tier-amount {
+      font-size: clamp(36px, 6vw, 48px);
+      font-weight: 900;
+      color: #FF6B35;
+      margin-bottom: 16px;
+      line-height: 1;
+    }
+    
+    .tier-name {
+      font-size: 20px;
+      font-weight: 700;
+      color: #0C2D31;
+      margin-bottom: 16px;
+    }
+    
+    .tier-description {
+      color: #546a70;
+      line-height: 1.6;
+      margin-bottom: 24px;
+      font-size: 14px;
+    }
+    
+    .tier-features {
+      list-style: none;
+      margin-bottom: 32px;
+    }
+    
+    .tier-features li {
+      display: flex;
+      align-items: center;
+      margin-bottom: 8px;
+      color: #546a70;
+      font-size: 14px;
+    }
+    
+    .tier-features li::before {
+      content: '✓';
+      color: #FF6B35;
+      font-weight: 700;
+      margin-right: 8px;
+      font-size: 12px;
+    }
+    
+    .tier-button {
+      width: 100%;
+      background: linear-gradient(135deg, #FF6B35, #E85D00);
+      color: white;
+      padding: 16px 24px;
+      border: none;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .tier-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(255,107,53,0.3);
+    }
+    
+    .custom-amount {
+      background: white;
+      border-radius: 20px;
+      padding: 40px 32px;
+      text-align: center;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+      border: 2px solid rgba(51,153,153,0.1);
+      margin-bottom: 48px;
+    }
+    
+    .custom-amount h3 {
+      font-size: 24px;
+      font-weight: 800;
+      margin-bottom: 16px;
+      color: #0C2D31;
+    }
+    
+    .custom-amount p {
+      color: #546a70;
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+    
+    .custom-input-group {
+      display: flex;
+      gap: 16px;
+      max-width: 400px;
+      margin: 0 auto 24px;
+    }
+    
+    .custom-input {
+      flex: 1;
+      padding: 16px 20px;
+      border: 2px solid #e9ecef;
+      border-radius: 12px;
+      font-size: 18px;
+      font-weight: 600;
+      text-align: center;
+      transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+    }
+    
+    .custom-input:focus {
+      outline: none;
+      border-color: #339999;
+      box-shadow: 0 0 0 3px rgba(51,153,153,0.1);
+    }
+    
+    .custom-button {
+      background: linear-gradient(135deg, #339999, #2C8B8B);
+      color: white;
+      padding: 16px 32px;
+      border: none;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .custom-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(51,153,153,0.3);
+    }
+    
+    .alternative-giving {
+      background: #f8f9fa;
+      padding: 80px 20px;
+      border-radius: 20px;
+      margin: 40px 0;
+    }
+    
+    .alternative-giving h2 {
+      text-align: center;
+      font-size: clamp(36px, 6vw, 48px);
+      font-weight: 800;
+      margin-bottom: 48px;
+      color: #0C2D31;
+      letter-spacing: -0.02em;
+    }
+    
+    .giving-options {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 32px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    
+    .giving-option {
+      background: white;
+      border-radius: 16px;
+      padding: 32px;
+      text-align: center;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+      border: 1px solid rgba(51,153,153,0.1);
+    }
+    
+    .giving-option h3 {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: #0C2D31;
+    }
+    
+    .giving-option p {
+      color: #546a70;
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+    
+    .giving-option a {
+      color: #339999;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .giving-option a:hover {
+      text-decoration: underline;
+    }
+    
+    .tax-notice {
+      background: linear-gradient(135deg, rgba(51,153,153,0.1), rgba(255,107,53,0.1));
+      border: 1px solid rgba(51,153,153,0.2);
+      border-radius: 16px;
+      padding: 32px;
+      text-align: center;
+      margin: 40px 0;
+    }
+    
+    .tax-notice h3 {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: #0C2D31;
+    }
+    
+    .tax-notice p {
+      color: #546a70;
+      line-height: 1.6;
+      margin: 0;
+    }
+    
+    @media (max-width: 768px) {
+      .tiers-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .custom-input-group {
+        flex-direction: column;
+      }
+      
+      .giving-options {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body data-theme="light">
+  <!-- Header will be injected here by load-components.js -->
+  <main id="main">
+    <!-- Hero Section -->
+    <section class="impact-hero">
+      <div class="impact-hero-content">
+        <h1>Make an Impact</h1>
+        <p>Your donation directly transforms lives, providing mobility, independence, and hope to spinal cord injury survivors in Louisiana's Acadiana region.</p>
+        <a href="#donate" class="cta-button">Donate Now</a>
+      </div>
+    </section>
+
+    <!-- Impact Stats -->
+    <section class="impact-stats">
+      <h2>Our Impact</h2>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-number" data-count="125000">$0</div>
+          <div class="stat-label">Grants Awarded</div>
+          <div class="stat-description">Total funding provided to survivors</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" data-count="47">0</div>
+          <div class="stat-label">Lives Impacted</div>
+          <div class="stat-description">Individuals and families served</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" data-count="89">0</div>
+          <div class="stat-label">Equipment Provided</div>
+          <div class="stat-description">Wheelchairs, vehicles, and aids</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" data-count="12">0</div>
+          <div class="stat-label">Home Modifications</div>
+          <div class="stat-description">Accessibility improvements completed</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Donation Tiers -->
+    <section id="donate" class="donation-tiers">
+      <h2>Choose Your Impact</h2>
+      <div class="tiers-grid">
+        <div class="tier-card">
+          <div class="tier-amount">$25</div>
+          <div class="tier-name">Care Package</div>
+          <div class="tier-description">Help provide essential supplies and comfort items for someone adjusting to life after injury.</div>
+          <ul class="tier-features">
+            <li>Personal care items</li>
+            <li>Comfort supplies</li>
+            <li>Resource materials</li>
+          </ul>
+          <button class="tier-button" onclick="openDonateModal(25)">Donate $25</button>
+        </div>
+
+        <div class="tier-card">
+          <div class="tier-amount">$50</div>
+          <div class="tier-name">Accessibility Assessment</div>
+          <div class="tier-description">Fund a home accessibility assessment to help someone identify needed modifications.</div>
+          <ul class="tier-features">
+            <li>Professional assessment</li>
+            <li>Modification recommendations</li>
+            <li>Priority action plan</li>
+          </ul>
+          <button class="tier-button" onclick="openDonateModal(50)">Donate $50</button>
+        </div>
+
+        <div class="tier-card featured">
+          <div class="tier-amount">$100</div>
+          <div class="tier-name">Emergency Equipment Fund</div>
+          <div class="tier-description">Support our emergency fund to provide immediate assistance when someone's equipment fails.</div>
+          <ul class="tier-features">
+            <li>Emergency repairs</li>
+            <li>Replacement equipment</li>
+            <li>Urgent needs support</li>
+          </ul>
+          <button class="tier-button" onclick="openDonateModal(100)">Donate $100</button>
+        </div>
+
+        <div class="tier-card">
+          <div class="tier-amount">$250</div>
+          <div class="tier-name">Mobility Grant Contribution</div>
+          <div class="tier-description">Make a significant contribution to our mobility grant program for wheelchair equipment.</div>
+          <ul class="tier-features">
+            <li>Wheelchair funding</li>
+            <li>Mobility aid assistance</li>
+            <li>Independence support</li>
+          </ul>
+          <button class="tier-button" onclick="openDonateModal(250)">Donate $250</button>
+        </div>
+      </div>
+
+      <!-- Custom Amount -->
+      <div class="custom-amount">
+        <h3>Custom Amount</h3>
+        <p>Every dollar makes a difference. Choose an amount that works for you and your budget.</p>
+        <div class="custom-input-group">
+          <input type="number" class="custom-input" id="customAmount" placeholder="0" min="1">
+          <button class="custom-button" onclick="donateCustomAmount()">Donate</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Alternative Ways to Give -->
+    <section class="alternative-giving">
+      <h2>Other Ways to Give</h2>
+      <div class="giving-options">
+        <div class="giving-option">
+          <h3>💳 Venmo/CashApp</h3>
+          <p>Send donations directly through mobile payment apps for quick and easy giving.</p>
+          <a href="https://venmo.com/meauxbility" target="_blank">Donate via Venmo</a>
+        </div>
+        <div class="giving-option">
+          <h3>🏢 Employer Matching</h3>
+          <p>Many employers offer matching gift programs that can double or triple your impact.</p>
+          <a href="/fred/connect.html">Learn More</a>
+        </div>
+        <div class="giving-option">
+          <h3>📜 Legacy Giving</h3>
+          <p>Include Meauxbility in your estate planning to create lasting impact for future generations.</p>
+          <a href="/fred/connect.html">Get Information</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tax Deductible Notice -->
+    <section class="tax-notice">
+      <h3>🔒 Secure & Tax-Deductible</h3>
+      <p>All donations are processed securely and are tax-deductible to the full extent allowed by law. Meauxbility is a 501(c)(3) non-profit organization. EIN: 33-4214907</p>
+    </section>
+  </main>
+  <!-- Footer will be injected here by load-components.js -->
+  
+  <script>
+    // Animate counters
+    function animateCounters() {
+      const counters = document.querySelectorAll('.stat-number');
+      
+      counters.forEach(counter => {
+        const target = parseInt(counter.getAttribute('data-count'));
+        const duration = 2000;
+        const increment = target / (duration / 16);
+        let current = 0;
+        
+        const timer = setInterval(() => {
+          current += increment;
+          if (current >= target) {
+            current = target;
+            clearInterval(timer);
+          }
+          
+          if (target > 1000) {
+            counter.textContent = '$' + Math.floor(current).toLocaleString();
+          } else {
+            counter.textContent = Math.floor(current);
+          }
+        }, 16);
+      });
+    }
+    
+    // Initialize counters when page loads
+    document.addEventListener('DOMContentLoaded', animateCounters);
+    
+    // Custom amount donation
+    function donateCustomAmount() {
+      const amount = document.getElementById('customAmount').value;
+      if (amount && amount > 0) {
+        openDonateModal(parseInt(amount));
+      } else {
+        alert('Please enter a valid amount');
+      }
+    }
+    
+    // Open donate modal with specific amount
+    function openDonateModal(amount) {
+      // This will be handled by the footer's donate modal
+      if (typeof window.openDonateModal === 'function') {
+        window.openDonateModal();
+        // Set the amount in the modal
+        setTimeout(() => {
+          if (typeof window.selectMbxAmount === 'function') {
+            window.selectMbxAmount(amount);
+          }
+        }, 500);
+      } else {
+        alert('Donation modal will be available when the page fully loads');
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,68 +1,567 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Connect - Meauxbility</title>
-
-<!-- Fonts -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-
-<!-- Logo Preload -->
-<link rel="preload" as="image" href="https://cdn.shopify.com/s/files/1/0685/1654/4672/files/meauxbility_logo_540.webp?v=1760648661" type="image/webp">
-
-<!-- Styles -->
-<link rel="stylesheet" href="/fred/css/header.css">
-<link rel="stylesheet" href="/fred/css/global.css">
-
-<!-- Component Loader -->
-<script src="/fred/js/load-components.js"></script>
-
-<style>
-body {
-  padding-top: var(--nav-h);
-  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-}
-
-.coming-soon {
-  min-height: calc(100vh - var(--nav-h));
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 40px 20px;
-}
-
-.coming-soon h1 {
-  font-size: clamp(36px, 6vw, 64px);
-  font-weight: 900;
-  margin-bottom: 20px;
-  background: linear-gradient(135deg, #FF6B35 0%, #339999 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.coming-soon p {
-  font-size: 20px;
-  color: #546a70;
-  max-width: 600px;
-  margin: 0 auto;
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Connect - Meauxbility</title>
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <!-- Logo Preload -->
+  <link rel="preload" as="image" href="https://cdn.shopify.com/s/files/1/0685/1654/4672/files/meauxbility_logo_540.webp?v=1760648661" type="image/webp">
+  <!-- Styles -->
+  <link rel="stylesheet" href="/fred/css/header.css">
+  <link rel="stylesheet" href="/fred/css/global.css">
+  <link rel="stylesheet" href="/fred/css/footer.css">
+  <!-- Component Loader -->
+  <script src="/fred/js/load-components.js"></script>
+  <style>
+    body {
+      padding-top: var(--nav-h);
+    }
+    
+    /* Connect Page Styles */
+    .connect-hero {
+      background: linear-gradient(135deg, #FF6B35 0%, #339999 100%);
+      color: white;
+      padding: 120px 0 80px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .connect-hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+      opacity: 0.3;
+    }
+    
+    .connect-hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    .connect-hero h1 {
+      font-size: clamp(48px, 8vw, 72px);
+      font-weight: 900;
+      margin-bottom: 24px;
+      letter-spacing: -0.02em;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+    
+    .connect-hero p {
+      font-size: clamp(18px, 3vw, 24px);
+      font-weight: 500;
+      margin-bottom: 32px;
+      opacity: 0.95;
+      line-height: 1.6;
+    }
+    
+    .connect-hero .cta-button {
+      display: inline-block;
+      background: rgba(255,255,255,0.2);
+      color: white;
+      padding: 16px 32px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 18px;
+      border: 2px solid rgba(255,255,255,0.3);
+      transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+      backdrop-filter: blur(10px);
+    }
+    
+    .connect-hero .cta-button:hover {
+      background: rgba(255,255,255,0.3);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+    }
+    
+    .forms-section {
+      padding: 80px 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .forms-section h2 {
+      text-align: center;
+      font-size: clamp(36px, 6vw, 48px);
+      font-weight: 800;
+      margin-bottom: 48px;
+      color: #0C2D31;
+      letter-spacing: -0.02em;
+    }
+    
+    .forms-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 80px;
+    }
+    
+    .form-card {
+      background: white;
+      border-radius: 20px;
+      padding: 40px 32px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+      border: 1px solid rgba(255,107,53,0.1);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .form-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #FF6B35, #339999);
+    }
+    
+    .form-card h3 {
+      font-size: 24px;
+      font-weight: 800;
+      margin-bottom: 16px;
+      color: #0C2D31;
+      letter-spacing: -0.01em;
+    }
+    
+    .form-card p {
+      color: #546a70;
+      line-height: 1.7;
+      margin-bottom: 32px;
+      font-size: 16px;
+    }
+    
+    .form-group {
+      margin-bottom: 24px;
+    }
+    
+    .form-group label {
+      display: block;
+      color: #0C2D31;
+      margin-bottom: 8px;
+      font-weight: 600;
+      font-size: 14px;
+    }
+    
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px 16px;
+      border: 2px solid #e9ecef;
+      border-radius: 10px;
+      font-size: 16px;
+      font-family: 'Inter', sans-serif;
+      transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+      background: white;
+    }
+    
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: #FF6B35;
+      box-shadow: 0 0 0 3px rgba(255,107,53,0.1);
+    }
+    
+    .form-group textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+    
+    .form-submit {
+      width: 100%;
+      background: linear-gradient(135deg, #FF6B35, #E85D00);
+      color: white;
+      padding: 16px 24px;
+      border: none;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .form-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(255,107,53,0.3);
+    }
+    
+    .office-info {
+      background: #f8f9fa;
+      padding: 80px 20px;
+      text-align: center;
+      border-radius: 20px;
+      margin: 40px 0;
+    }
+    
+    .office-info h2 {
+      font-size: clamp(36px, 6vw, 48px);
+      font-weight: 800;
+      margin-bottom: 32px;
+      color: #0C2D31;
+      letter-spacing: -0.02em;
+    }
+    
+    .office-details {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 32px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .office-detail {
+      background: white;
+      padding: 32px 24px;
+      border-radius: 16px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+      border-left: 4px solid #FF6B35;
+    }
+    
+    .office-detail h3 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: #0C2D31;
+    }
+    
+    .office-detail p {
+      color: #546a70;
+      line-height: 1.6;
+      margin: 0;
+    }
+    
+    .office-detail a {
+      color: #FF6B35;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    
+    .office-detail a:hover {
+      text-decoration: underline;
+    }
+    
+    .success-message {
+      display: none;
+      background: linear-gradient(135deg, rgba(33,196,140,0.1), rgba(33,196,140,0.05));
+      border: 1px solid rgba(33,196,140,0.3);
+      border-radius: 12px;
+      padding: 24px;
+      margin-top: 24px;
+      text-align: center;
+    }
+    
+    .success-message.show {
+      display: block;
+      animation: successPulse 0.6s ease-out;
+    }
+    
+    @keyframes successPulse {
+      0% { transform: scale(0.9); opacity: 0; }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    
+    .success-message h4 {
+      color: #21c48c;
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    
+    .success-message p {
+      color: #546a70;
+      margin: 0;
+    }
+    
+    .error-message {
+      display: none;
+      background: linear-gradient(135deg, rgba(255,107,53,0.1), rgba(255,107,53,0.05));
+      border: 1px solid rgba(255,107,53,0.3);
+      border-radius: 12px;
+      padding: 24px;
+      margin-top: 24px;
+      text-align: center;
+    }
+    
+    .error-message.show {
+      display: block;
+    }
+    
+    .error-message h4 {
+      color: #FF6B35;
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    
+    .error-message p {
+      color: #546a70;
+      margin: 0;
+    }
+    
+    @media (max-width: 768px) {
+      .forms-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+        padding: 60px 20px;
+      }
+      
+      .form-card {
+        padding: 32px 24px;
+      }
+      
+      .office-details {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 <body data-theme="light">
+  <!-- Header will be injected here by load-components.js -->
+  <main id="main">
+    <!-- Hero Section -->
+    <section class="connect-hero">
+      <div class="connect-hero-content">
+        <h1>Let's Connect</h1>
+        <p>Ready to get started? Have questions? We're here to help you navigate your journey and connect you with the resources you need.</p>
+        <a href="#forms" class="cta-button">Get Started</a>
+      </div>
+    </section>
 
-<main id="main">
-  <div class="coming-soon">
-    <div>
-      <h1>Connect</h1>
-      <p>Ready to start your transformation journey? Connect with us to learn more about how we can support you. More details coming soon!</p>
-    </div>
-  </div>
-</main>
+    <!-- Forms Section -->
+    <section id="forms" class="forms-section">
+      <h2>How Can We Help?</h2>
+      <div class="forms-grid">
+        <!-- Contact Form -->
+        <div class="form-card">
+          <h3>General Contact</h3>
+          <p>Have questions about our programs, need information, or want to learn more about how we can help?</p>
+          
+          <form id="contactForm" onsubmit="submitContactForm(event)">
+            <div class="form-group">
+              <label for="contactName">Full Name *</label>
+              <input type="text" id="contactName" name="name" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="contactEmail">Email Address *</label>
+              <input type="email" id="contactEmail" name="email" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="contactPhone">Phone Number</label>
+              <input type="tel" id="contactPhone" name="phone">
+            </div>
+            
+            <div class="form-group">
+              <label for="contactSubject">Subject</label>
+              <select id="contactSubject" name="subject">
+                <option value="general">General Information</option>
+                <option value="programs">Program Information</option>
+                <option value="support">Support Services</option>
+                <option value="volunteer">Volunteer Opportunities</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label for="contactMessage">Message *</label>
+              <textarea id="contactMessage" name="message" placeholder="Tell us how we can help you..." required></textarea>
+            </div>
+            
+            <button type="submit" class="form-submit">Send Message</button>
+            
+            <div class="success-message" id="contactSuccess">
+              <h4>✅ Message Sent!</h4>
+              <p>Thank you for reaching out. We'll get back to you within 24 hours.</p>
+            </div>
+            
+            <div class="error-message" id="contactError">
+              <h4>❌ Error</h4>
+              <p>There was a problem sending your message. Please try again or contact us directly.</p>
+            </div>
+          </form>
+        </div>
 
+        <!-- Grant Application Form -->
+        <div class="form-card">
+          <h3>Grant Application</h3>
+          <p>Ready to apply for assistance? Complete this form to start your application process for mobility grants and services.</p>
+          
+          <form id="applicationForm" onsubmit="submitApplicationForm(event)">
+            <div class="form-group">
+              <label for="appName">Full Name *</label>
+              <input type="text" id="appName" name="name" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="appEmail">Email Address *</label>
+              <input type="email" id="appEmail" name="email" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="appPhone">Phone Number *</label>
+              <input type="tel" id="appPhone" name="phone" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="appNeed">What do you need assistance with? *</label>
+              <select id="appNeed" name="need" required>
+                <option value="">Select an option</option>
+                <option value="wheelchair">Wheelchair Equipment</option>
+                <option value="vehicle">Vehicle Modifications</option>
+                <option value="home">Home Modifications</option>
+                <option value="technology">Assistive Technology</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label for="appIncome">Annual Household Income *</label>
+              <select id="appIncome" name="income" required>
+                <option value="">Select income range</option>
+                <option value="under-25k">Under $25,000</option>
+                <option value="25k-40k">$25,000 - $40,000</option>
+                <option value="40k-60k">$40,000 - $60,000</option>
+                <option value="60k-80k">$60,000 - $80,000</option>
+                <option value="over-80k">Over $80,000</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label for="appDetails">Please describe your specific needs *</label>
+              <textarea id="appDetails" name="details" placeholder="Provide details about your situation and how we can help..." required></textarea>
+            </div>
+            
+            <button type="submit" class="form-submit">Submit Application</button>
+            
+            <div class="success-message" id="appSuccess">
+              <h4>✅ Application Submitted!</h4>
+              <p>Your application has been received. We'll review it and contact you within 3-5 business days.</p>
+            </div>
+            
+            <div class="error-message" id="appError">
+              <h4>❌ Error</h4>
+              <p>There was a problem submitting your application. Please try again or contact us directly.</p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- Office Information -->
+    <section class="office-info">
+      <h2>Get in Touch</h2>
+      <div class="office-details">
+        <div class="office-detail">
+          <h3>📍 Location</h3>
+          <p>Lafayette, Louisiana<br>Acadiana Region</p>
+        </div>
+        <div class="office-detail">
+          <h3>📧 Email</h3>
+          <p><a href="mailto:info@meauxbility.org">info@meauxbility.org</a></p>
+        </div>
+        <div class="office-detail">
+          <h3>🏢 EIN</h3>
+          <p>33-4214907<br>501(c)(3) Non-Profit</p>
+        </div>
+        <div class="office-detail">
+          <h3>⏰ Response Time</h3>
+          <p>We typically respond within 24 hours during business days</p>
+        </div>
+      </div>
+    </section>
+  </main>
+  <!-- Footer will be injected here by load-components.js -->
+  
+  <script>
+    function submitContactForm(event) {
+      event.preventDefault();
+      
+      // Get form data
+      const formData = new FormData(event.target);
+      const data = Object.fromEntries(formData);
+      
+      // Show loading state
+      const submitButton = event.target.querySelector('.form-submit');
+      const originalText = submitButton.textContent;
+      submitButton.textContent = 'Sending...';
+      submitButton.disabled = true;
+      
+      // Simulate form submission (replace with actual API call)
+      setTimeout(() => {
+        // Hide any existing messages
+        document.getElementById('contactError').classList.remove('show');
+        
+        // Show success message
+        document.getElementById('contactSuccess').classList.add('show');
+        
+        // Reset form
+        event.target.reset();
+        
+        // Reset button
+        submitButton.textContent = originalText;
+        submitButton.disabled = false;
+        
+        // Hide success message after 5 seconds
+        setTimeout(() => {
+          document.getElementById('contactSuccess').classList.remove('show');
+        }, 5000);
+        
+      }, 1500);
+    }
+    
+    function submitApplicationForm(event) {
+      event.preventDefault();
+      
+      // Get form data
+      const formData = new FormData(event.target);
+      const data = Object.fromEntries(formData);
+      
+      // Show loading state
+      const submitButton = event.target.querySelector('.form-submit');
+      const originalText = submitButton.textContent;
+      submitButton.textContent = 'Submitting...';
+      submitButton.disabled = true;
+      
+      // Simulate form submission (replace with actual API call)
+      setTimeout(() => {
+        // Hide any existing messages
+        document.getElementById('appError').classList.remove('show');
+        
+        // Show success message
+        document.getElementById('appSuccess').classList.add('show');
+        
+        // Reset form
+        event.target.reset();
+        
+        // Reset button
+        submitButton.textContent = originalText;
+        submitButton.disabled = false;
+        
+        // Hide success message after 5 seconds
+        setTimeout(() => {
+          document.getElementById('appSuccess').classList.remove('show');
+        }, 5000);
+        
+      }, 1500);
+    }
+  </script>
 </body>
 </html>

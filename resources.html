@@ -1,69 +1,639 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Resources - Meauxbility</title>
-
-<!-- Fonts -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-
-<!-- Logo Preload -->
-<link rel="preload" as="image" href="https://cdn.shopify.com/s/files/1/0685/1654/4672/files/meauxbility_logo_540.webp?v=1760648661" type="image/webp">
-
-<!-- Styles -->
-<link rel="stylesheet" href="/fred/css/header.css">
-<link rel="stylesheet" href="/fred/css/global.css">
-
-<!-- Component Loader -->
-<script src="/fred/js/load-components.js"></script>
-
-<style>
-body {
-  padding-top: var(--nav-h);
-  background: linear-gradient(135deg, #0a1f22 0%, #1a3a3d 50%, #2d5a5d 100%);
-  color: rgba(255,255,255,.95);
-}
-
-.coming-soon {
-  min-height: calc(100vh - var(--nav-h));
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 40px 20px;
-}
-
-.coming-soon h1 {
-  font-size: clamp(36px, 6vw, 64px);
-  font-weight: 900;
-  margin-bottom: 20px;
-  background: linear-gradient(135deg, #4AECDC 0%, #9B59B6 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.coming-soon p {
-  font-size: 20px;
-  color: rgba(255,255,255,.8);
-  max-width: 600px;
-  margin: 0 auto;
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resources - Meauxbility</title>
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <!-- Logo Preload -->
+  <link rel="preload" as="image" href="https://cdn.shopify.com/s/files/1/0685/1654/4672/files/meauxbility_logo_540.webp?v=1760648661" type="image/webp">
+  <!-- Styles -->
+  <link rel="stylesheet" href="/fred/css/header.css">
+  <link rel="stylesheet" href="/fred/css/global.css">
+  <link rel="stylesheet" href="/fred/css/footer.css">
+  <!-- Component Loader -->
+  <script src="/fred/js/load-components.js"></script>
+  <style>
+    body {
+      padding-top: var(--nav-h);
+      background: #0a1f22;
+      color: rgba(255,255,255,0.95);
+    }
+    
+    /* Resources Page Styles */
+    .resources-hero {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f1c2e 100%);
+      color: white;
+      padding: 120px 0 80px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .resources-hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(circle at 30% 20%, rgba(74,236,220,0.15) 0%, transparent 50%),
+                  radial-gradient(circle at 70% 80%, rgba(153,69,255,0.1) 0%, transparent 50%);
+      opacity: 0.8;
+    }
+    
+    .resources-hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    .resources-hero h1 {
+      font-size: clamp(48px, 8vw, 72px);
+      font-weight: 900;
+      margin-bottom: 24px;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #4AECDC, #5FDDDC);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .resources-hero p {
+      font-size: clamp(18px, 3vw, 24px);
+      font-weight: 500;
+      margin-bottom: 32px;
+      opacity: 0.9;
+      line-height: 1.6;
+    }
+    
+    .resources-hero .cta-button {
+      display: inline-block;
+      background: linear-gradient(135deg, #4AECDC, #5FDDDC);
+      color: #0a1f22;
+      padding: 16px 32px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 18px;
+      transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+      box-shadow: 0 8px 24px rgba(74,236,220,0.3);
+    }
+    
+    .resources-hero .cta-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(74,236,220,0.4);
+    }
+    
+    .resource-categories {
+      padding: 80px 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .resource-categories h2 {
+      text-align: center;
+      font-size: clamp(36px, 6vw, 48px);
+      font-weight: 800;
+      margin-bottom: 48px;
+      color: #4AECDC;
+      letter-spacing: -0.02em;
+    }
+    
+    .categories-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 32px;
+      margin-bottom: 80px;
+    }
+    
+    .category-card {
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(74,236,220,0.2);
+      border-radius: 20px;
+      padding: 40px 32px;
+      transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .category-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #4AECDC, #5FDDDC);
+    }
+    
+    .category-card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(74,236,220,0.4);
+      box-shadow: 0 16px 48px rgba(74,236,220,0.1);
+    }
+    
+    .category-icon {
+      width: 64px;
+      height: 64px;
+      background: linear-gradient(135deg, #4AECDC, #5FDDDC);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      margin-bottom: 24px;
+      color: #0a1f22;
+    }
+    
+    .category-card h3 {
+      font-size: 24px;
+      font-weight: 800;
+      margin-bottom: 16px;
+      color: white;
+      letter-spacing: -0.01em;
+    }
+    
+    .category-card p {
+      color: rgba(255,255,255,0.8);
+      line-height: 1.7;
+      margin-bottom: 24px;
+      font-size: 16px;
+    }
+    
+    .category-resources {
+      list-style: none;
+      margin-bottom: 32px;
+    }
+    
+    .category-resources li {
+      display: flex;
+      align-items: center;
+      margin-bottom: 12px;
+      color: rgba(255,255,255,0.8);
+      font-size: 15px;
+    }
+    
+    .category-resources li::before {
+      content: '📄';
+      margin-right: 12px;
+      font-size: 16px;
+    }
+    
+    .category-cta {
+      display: inline-block;
+      background: linear-gradient(135deg, #4AECDC, #5FDDDC);
+      color: #0a1f22;
+      padding: 12px 24px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 14px;
+      transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .category-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(74,236,220,0.3);
+    }
+    
+    .downloads-section {
+      background: rgba(255,255,255,0.02);
+      padding: 80px 20px;
+      border-radius: 20px;
+      margin: 40px 0;
+    }
+    
+    .downloads-section h2 {
+      text-align: center;
+      font-size: clamp(36px, 6vw, 48px);
+      font-weight: 800;
+      margin-bottom: 48px;
+      color: #4AECDC;
+      letter-spacing: -0.02em;
+    }
+    
+    .downloads-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 32px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .download-card {
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(74,236,220,0.2);
+      border-radius: 16px;
+      padding: 32px;
+      transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .download-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(74,236,220,0.05), rgba(153,69,255,0.05));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    .download-card:hover::before {
+      opacity: 1;
+    }
+    
+    .download-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(74,236,220,0.4);
+      box-shadow: 0 12px 32px rgba(74,236,220,0.1);
+    }
+    
+    .download-icon {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, #4AECDC, #5FDDDC);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      margin-bottom: 16px;
+      color: #0a1f22;
+      position: relative;
+      z-index: 2;
+    }
+    
+    .download-card h3 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: white;
+      position: relative;
+      z-index: 2;
+    }
+    
+    .download-card p {
+      color: rgba(255,255,255,0.8);
+      line-height: 1.6;
+      margin-bottom: 16px;
+      font-size: 14px;
+      position: relative;
+      z-index: 2;
+    }
+    
+    .download-button {
+      display: inline-block;
+      background: linear-gradient(135deg, #4AECDC, #5FDDDC);
+      color: #0a1f22;
+      padding: 8px 16px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 12px;
+      transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      position: relative;
+      z-index: 2;
+    }
+    
+    .download-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(74,236,220,0.3);
+    }
+    
+    .external-links {
+      padding: 80px 20px;
+    }
+    
+    .external-links h2 {
+      text-align: center;
+      font-size: clamp(36px, 6vw, 48px);
+      font-weight: 800;
+      margin-bottom: 48px;
+      color: #4AECDC;
+      letter-spacing: -0.02em;
+    }
+    
+    .links-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 32px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .link-card {
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(74,236,220,0.2);
+      border-radius: 16px;
+      padding: 32px;
+      transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+    }
+    
+    .link-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(74,236,220,0.4);
+      box-shadow: 0 12px 32px rgba(74,236,220,0.1);
+    }
+    
+    .link-card h3 {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: white;
+    }
+    
+    .link-card p {
+      color: rgba(255,255,255,0.8);
+      line-height: 1.6;
+      margin-bottom: 16px;
+      font-size: 14px;
+    }
+    
+    .link-button {
+      display: inline-block;
+      background: transparent;
+      color: #4AECDC;
+      padding: 8px 16px;
+      border: 1px solid #4AECDC;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 12px;
+      transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .link-button:hover {
+      background: #4AECDC;
+      color: #0a1f22;
+    }
+    
+    .support-cta {
+      background: linear-gradient(135deg, #1a1a2e, #16213e);
+      padding: 80px 20px;
+      text-align: center;
+      border-radius: 20px;
+      margin: 40px 0;
+    }
+    
+    .support-cta h2 {
+      font-size: clamp(36px, 6vw, 48px);
+      font-weight: 800;
+      margin-bottom: 24px;
+      color: #4AECDC;
+      letter-spacing: -0.02em;
+    }
+    
+    .support-cta p {
+      font-size: 18px;
+      color: rgba(255,255,255,0.8);
+      margin-bottom: 32px;
+      line-height: 1.7;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .support-button {
+      display: inline-block;
+      background: linear-gradient(135deg, #4AECDC, #5FDDDC);
+      color: #0a1f22;
+      padding: 16px 32px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 16px;
+      transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .support-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(74,236,220,0.3);
+    }
+    
+    @media (max-width: 768px) {
+      .categories-grid {
+        grid-template-columns: 1fr;
+        padding: 60px 20px;
+      }
+      
+      .category-card {
+        padding: 32px 24px;
+      }
+      
+      .downloads-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .links-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 <body data-theme="dark">
+  <!-- Header will be injected here by load-components.js -->
+  <main id="main">
+    <!-- Hero Section -->
+    <section class="resources-hero">
+      <div class="resources-hero-content">
+        <h1>Knowledge is Power</h1>
+        <p>Access comprehensive resources, guides, and tools designed to help you navigate your journey with confidence and independence.</p>
+        <a href="#resources" class="cta-button">Explore Resources</a>
+      </div>
+    </section>
 
-<main id="main">
-  <div class="coming-soon">
-    <div>
-      <h1>Resources</h1>
-      <p>Access our comprehensive library of resources, tools, and guides to support your transformation journey. Coming soon!</p>
-    </div>
-  </div>
-</main>
+    <!-- Resource Categories -->
+    <section id="resources" class="resource-categories">
+      <h2>Resource Library</h2>
+      <div class="categories-grid">
+        <div class="category-card">
+          <div class="category-icon">💰</div>
+          <h3>Financial Assistance Guides</h3>
+          <p>Comprehensive guides to help you navigate financial resources, insurance, and funding opportunities available to spinal cord injury survivors.</p>
+          <ul class="category-resources">
+            <li>Insurance Navigation Guide</li>
+            <li>SSDI Application Checklist</li>
+            <li>Medicaid Waiver Programs</li>
+            <li>Grant Application Templates</li>
+          </ul>
+          <a href="#downloads" class="category-cta">View Resources</a>
+        </div>
 
+        <div class="category-card">
+          <div class="category-icon">🏥</div>
+          <h3>Healthcare Navigation</h3>
+          <p>Essential information for managing your healthcare, finding specialists, and understanding your rights as a patient.</p>
+          <ul class="category-resources">
+            <li>Healthcare Provider Directory</li>
+            <li>Medical Rights Guide</li>
+            <li>Rehabilitation Resources</li>
+            <li>Emergency Preparedness Plan</li>
+          </ul>
+          <a href="#downloads" class="category-cta">View Resources</a>
+        </div>
+
+        <div class="category-card">
+          <div class="category-icon">⚖️</div>
+          <h3>Legal Rights & Advocacy</h3>
+          <p>Understand your legal rights, access advocacy resources, and learn how to advocate for yourself and others in your community.</p>
+          <ul class="category-resources">
+            <li>ADA Rights Guide</li>
+            <li>Employment Rights</li>
+            <li>Housing Rights</li>
+            <li>Advocacy Toolkit</li>
+          </ul>
+          <a href="#downloads" class="category-cta">View Resources</a>
+        </div>
+
+        <div class="category-card">
+          <div class="category-icon">🔧</div>
+          <h3>Equipment & Technology</h3>
+          <p>Information about adaptive equipment, assistive technology, and resources to help you maintain independence and quality of life.</p>
+          <ul class="category-resources">
+            <li>Equipment Funding Guide</li>
+            <li>Technology Assessment</li>
+            <li>Maintenance Schedules</li>
+            <li>Upgrade Planning</li>
+          </ul>
+          <a href="#downloads" class="category-cta">View Resources</a>
+        </div>
+
+        <div class="category-card">
+          <div class="category-icon">👨‍👩‍👧‍👦</div>
+          <h3>Caregiver Support</h3>
+          <p>Resources for family members and caregivers, including support strategies, self-care tips, and community connections.</p>
+          <ul class="category-resources">
+            <li>Caregiver Self-Care Guide</li>
+            <li>Communication Strategies</li>
+            <li>Support Group Directory</li>
+            <li>Respite Care Resources</li>
+          </ul>
+          <a href="#downloads" class="category-cta">View Resources</a>
+        </div>
+
+        <div class="category-card">
+          <div class="category-icon">🏃‍♂️</div>
+          <h3>Adaptive Sports & Recreation</h3>
+          <p>Discover opportunities for staying active, participating in sports, and building community through adaptive recreation.</p>
+          <ul class="category-resources">
+            <li>Local Sports Programs</li>
+            <li>Equipment Rental Guide</li>
+            <li>Training Resources</li>
+            <li>Competition Opportunities</li>
+          </ul>
+          <a href="#downloads" class="category-cta">View Resources</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Downloadable PDFs -->
+    <section id="downloads" class="downloads-section">
+      <h2>Downloadable Resources</h2>
+      <div class="downloads-grid">
+        <div class="download-card">
+          <div class="download-icon">📋</div>
+          <h3>Emergency Preparedness Plan</h3>
+          <p>A comprehensive guide to preparing for emergencies as a wheelchair user, including evacuation plans and emergency contacts.</p>
+          <a href="#" class="download-button">Download PDF</a>
+        </div>
+        <div class="download-card">
+          <div class="download-icon">🏠</div>
+          <h3>Home Accessibility Checklist</h3>
+          <p>Evaluate your home's accessibility and identify modifications that can improve your independence and safety.</p>
+          <a href="#" class="download-button">Download PDF</a>
+        </div>
+        <div class="download-card">
+          <div class="download-icon">💼</div>
+          <h3>Employment Rights Guide</h3>
+          <p>Understand your rights in the workplace and learn how to advocate for reasonable accommodations.</p>
+          <a href="#" class="download-button">Download PDF</a>
+        </div>
+        <div class="download-card">
+          <div class="download-icon">🚗</div>
+          <h3>Vehicle Modification Guide</h3>
+          <p>Information about adaptive vehicle modifications, funding options, and finding qualified installers.</p>
+          <a href="#" class="download-button">Download PDF</a>
+        </div>
+        <div class="download-card">
+          <div class="download-icon">🏥</div>
+          <h3>Healthcare Provider Directory</h3>
+          <p>A curated list of healthcare providers in the Acadiana region who specialize in spinal cord injury care.</p>
+          <a href="#" class="download-button">Download PDF</a>
+        </div>
+        <div class="download-card">
+          <div class="download-icon">📞</div>
+          <h3>Resource Contact List</h3>
+          <p>Important phone numbers, websites, and contact information for local and national resources.</p>
+          <a href="#" class="download-button">Download PDF</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- External Links -->
+    <section class="external-links">
+      <h2>External Resources</h2>
+      <div class="links-grid">
+        <div class="link-card">
+          <h3>National Spinal Cord Injury Association</h3>
+          <p>Comprehensive information about spinal cord injuries, research updates, and national resources.</p>
+          <a href="https://www.spinalcord.org" class="link-button" target="_blank">Visit Site</a>
+        </div>
+        <div class="link-card">
+          <h3>Christopher & Dana Reeve Foundation</h3>
+          <p>Research, advocacy, and quality of life initiatives for people living with paralysis.</p>
+          <a href="https://www.christopherreeve.org" class="link-button" target="_blank">Visit Site</a>
+        </div>
+        <div class="link-card">
+          <h3>United Spinal Association</h3>
+          <p>Advocacy, resources, and community support for people with spinal cord injuries and disorders.</p>
+          <a href="https://unitedspinal.org" class="link-button" target="_blank">Visit Site</a>
+        </div>
+        <div class="link-card">
+          <h3>Louisiana Rehabilitation Services</h3>
+          <p>State resources for vocational rehabilitation and independent living services.</p>
+          <a href="https://www.laworks.net" class="link-button" target="_blank">Visit Site</a>
+        </div>
+        <div class="link-card">
+          <h3>ADA National Network</h3>
+          <p>Information about the Americans with Disabilities Act and your rights under the law.</p>
+          <a href="https://adata.org" class="link-button" target="_blank">Visit Site</a>
+        </div>
+        <div class="link-card">
+          <h3>Social Security Administration</h3>
+          <p>Information about SSDI, SSI, and other Social Security benefits for people with disabilities.</p>
+          <a href="https://www.ssa.gov" class="link-button" target="_blank">Visit Site</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Support CTA -->
+    <section class="support-cta">
+      <h2>Need More Help?</h2>
+      <p>Can't find what you're looking for? Our team is here to help you navigate resources and find the information you need.</p>
+      <a href="/fred/connect.html" class="support-button">Request Support</a>
+    </section>
+  </main>
+  <!-- Footer will be injected here by load-components.js -->
 </body>
 </html>

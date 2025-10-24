@@ -2,67 +2,654 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Programs - Meauxbility</title>
-
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-
 <!-- Logo Preload -->
 <link rel="preload" as="image" href="https://cdn.shopify.com/s/files/1/0685/1654/4672/files/meauxbility_logo_540.webp?v=1760648661" type="image/webp">
-
 <!-- Styles -->
 <link rel="stylesheet" href="/fred/css/header.css">
 <link rel="stylesheet" href="/fred/css/global.css">
-
+  <link rel="stylesheet" href="/fred/css/footer.css">
 <!-- Component Loader -->
 <script src="/fred/js/load-components.js"></script>
-
 <style>
 body {
   padding-top: var(--nav-h);
-  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-}
-
-.coming-soon {
-  min-height: calc(100vh - var(--nav-h));
+    }
+    
+    /* Programs Page Styles */
+    .programs-hero {
+      background: linear-gradient(135deg, #FF6B35 0%, #339999 100%);
+      color: white;
+      padding: 120px 0 80px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .programs-hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+      opacity: 0.3;
+    }
+    
+    .programs-hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    .programs-hero h1 {
+      font-size: clamp(48px, 8vw, 72px);
+      font-weight: 900;
+      margin-bottom: 24px;
+      letter-spacing: -0.02em;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+    
+    .programs-hero p {
+      font-size: clamp(18px, 3vw, 24px);
+      font-weight: 500;
+      margin-bottom: 32px;
+      opacity: 0.95;
+      line-height: 1.6;
+    }
+    
+    .programs-hero .cta-button {
+      display: inline-block;
+      background: rgba(255,255,255,0.2);
+      color: white;
+      padding: 16px 32px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 18px;
+      border: 2px solid rgba(255,255,255,0.3);
+      transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+      backdrop-filter: blur(10px);
+    }
+    
+    .programs-hero .cta-button:hover {
+      background: rgba(255,255,255,0.3);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+    }
+    
+    .programs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 32px;
+      padding: 80px 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .program-card {
+      background: white;
+      border-radius: 20px;
+      padding: 40px 32px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+      transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+      border: 1px solid rgba(255,107,53,0.1);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .program-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #FF6B35, #339999);
+    }
+    
+    .program-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.15);
+    }
+    
+    .program-icon {
+      width: 64px;
+      height: 64px;
+      background: linear-gradient(135deg, #FF6B35, #E85D00);
+      border-radius: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
+      font-size: 28px;
+      margin-bottom: 24px;
+      color: white;
+    }
+    
+    .program-card h3 {
+      font-size: 24px;
+      font-weight: 800;
+      margin-bottom: 16px;
+      color: #0C2D31;
+      letter-spacing: -0.01em;
+    }
+    
+    .program-card p {
+      color: #546a70;
+      line-height: 1.7;
+      margin-bottom: 24px;
+      font-size: 16px;
+    }
+    
+    .program-features {
+      list-style: none;
+      margin-bottom: 32px;
+    }
+    
+    .program-features li {
+      display: flex;
+      align-items: center;
+      margin-bottom: 12px;
+      color: #546a70;
+      font-size: 15px;
+    }
+    
+    .program-features li::before {
+      content: '✓';
+      color: #FF6B35;
+      font-weight: 700;
+      margin-right: 12px;
+      font-size: 16px;
+    }
+    
+    .program-cta {
+      display: inline-block;
+      background: linear-gradient(135deg, #FF6B35, #E85D00);
+      color: white;
+      padding: 12px 24px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 14px;
+      transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .program-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(255,107,53,0.3);
+    }
+    
+    .eligibility-section {
+      background: #f8f9fa;
+      padding: 80px 20px;
+      text-align: center;
+    }
+    
+    .eligibility-content {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .eligibility-content h2 {
+      font-size: clamp(36px, 6vw, 48px);
+      font-weight: 800;
+      margin-bottom: 24px;
+      color: #0C2D31;
+      letter-spacing: -0.02em;
+    }
+    
+    .eligibility-content p {
+      font-size: 18px;
+      color: #546a70;
+      margin-bottom: 32px;
+      line-height: 1.7;
+    }
+    
+    .eligibility-requirements {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+    
+    .requirement-item {
+      background: white;
+      padding: 24px;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+      border-left: 4px solid #FF6B35;
+    }
+    
+    .requirement-item h4 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: #0C2D31;
+    }
+    
+    .requirement-item p {
+      font-size: 14px;
+      color: #546a70;
+      margin: 0;
+    }
+    
+    .apply-button {
+      display: inline-block;
+      background: linear-gradient(135deg, #339999, #2C8B8B);
+      color: white;
+      padding: 16px 32px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 18px;
+      transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .apply-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(51,153,153,0.3);
+    }
+    
+    .success-stories {
+      padding: 80px 20px;
+      background: white;
+    }
+    
+    .success-stories h2 {
+      text-align: center;
+      font-size: clamp(36px, 6vw, 48px);
+      font-weight: 800;
+      margin-bottom: 48px;
+      color: #0C2D31;
+      letter-spacing: -0.02em;
+    }
+    
+    .stories-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 32px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .story-card {
+      background: #f8f9fa;
+      border-radius: 16px;
+      padding: 32px;
   text-align: center;
-  padding: 40px 20px;
-}
-
-.coming-soon h1 {
-  font-size: clamp(36px, 6vw, 64px);
-  font-weight: 900;
-  margin-bottom: 20px;
-  background: linear-gradient(135deg, #FF6B35 0%, #339999 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.coming-soon p {
+      transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+    }
+    
+    .story-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.1);
+    }
+    
+    .story-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #FF6B35, #339999);
+      margin: 0 auto 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      color: white;
+      font-weight: 700;
+    }
+    
+    .story-card h4 {
   font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: #0C2D31;
+    }
+    
+    .story-card p {
   color: #546a70;
-  max-width: 600px;
+      line-height: 1.6;
+      font-style: italic;
+      margin-bottom: 16px;
+    }
+    
+    .story-program {
+      display: inline-block;
+      background: rgba(255,107,53,0.1);
+      color: #FF6B35;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .faq-section {
+      background: #f8f9fa;
+      padding: 80px 20px;
+    }
+    
+    .faq-content {
+      max-width: 800px;
   margin: 0 auto;
 }
+    
+    .faq-content h2 {
+      text-align: center;
+      font-size: clamp(36px, 6vw, 48px);
+      font-weight: 800;
+      margin-bottom: 48px;
+      color: #0C2D31;
+      letter-spacing: -0.02em;
+    }
+    
+    .faq-item {
+      background: white;
+      border-radius: 12px;
+      margin-bottom: 16px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    
+    .faq-question {
+      padding: 24px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 600;
+      color: #0C2D31;
+      transition: all 0.3s ease;
+    }
+    
+    .faq-question:hover {
+      background: #f8f9fa;
+    }
+    
+    .faq-answer {
+      padding: 0 24px;
+      max-height: 0;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      color: #546a70;
+      line-height: 1.6;
+    }
+    
+    .faq-answer.active {
+      padding: 0 24px 24px;
+      max-height: 200px;
+    }
+    
+    .faq-toggle {
+      font-size: 20px;
+      transition: transform 0.3s ease;
+    }
+    
+    .faq-toggle.active {
+      transform: rotate(45deg);
+    }
+    
+    @media (max-width: 768px) {
+      .programs-grid {
+        grid-template-columns: 1fr;
+        padding: 60px 20px;
+      }
+      
+      .program-card {
+        padding: 32px 24px;
+      }
+      
+      .eligibility-requirements {
+        grid-template-columns: 1fr;
+      }
+      
+      .stories-grid {
+        grid-template-columns: 1fr;
+      }
+    }
 </style>
 </head>
 <body data-theme="light">
+  <!-- Header will be injected here by load-components.js -->
+  <main id="main">
+    <!-- Hero Section -->
+    <section class="programs-hero">
+      <div class="programs-hero-content">
+        <h1>Transform Your Life</h1>
+        <p>Comprehensive programs designed to empower spinal cord injury survivors with mobility, independence, and hope.</p>
+        <a href="#programs" class="cta-button">Explore Programs</a>
+      </div>
+    </section>
 
-<main id="main">
-  <div class="coming-soon">
-    <div>
-      <h1>Programs</h1>
-      <p>Our comprehensive programs are designed to help you transform your pain into purpose. Check back soon for detailed information about our offerings!</p>
+    <!-- Programs Grid -->
+    <section id="programs" class="programs-grid">
+      <div class="program-card">
+        <div class="program-icon">🦽</div>
+        <h3>Mobility Grants</h3>
+        <p>Financial assistance for wheelchair equipment, adaptive vehicles, and mobility aids that restore independence and freedom.</p>
+        <ul class="program-features">
+          <li>Up to $5,000 per grant</li>
+          <li>Wheelchair equipment funding</li>
+          <li>Adaptive vehicle modifications</li>
+          <li>Mobility aid assistance</li>
+        </ul>
+        <a href="/fred/connect.html" class="program-cta">Apply Now</a>
+      </div>
+
+      <div class="program-card">
+        <div class="program-icon">🏠</div>
+        <h3>Accessibility Services</h3>
+        <p>Home modification support to create safe, accessible living spaces that promote independence and quality of life.</p>
+        <ul class="program-features">
+          <li>Home accessibility assessments</li>
+          <li>Ramp and lift installations</li>
+          <li>Bathroom modifications</li>
+          <li>Doorway widening</li>
+        </ul>
+        <a href="/fred/connect.html" class="program-cta">Get Started</a>
+      </div>
+
+      <div class="program-card">
+        <div class="program-icon">🤝</div>
+        <h3>Peer Support Network</h3>
+        <p>Connect with others who understand your journey through our comprehensive peer support and mentorship programs.</p>
+        <ul class="program-features">
+          <li>One-on-one mentorship</li>
+          <li>Support group meetings</li>
+          <li>Online community access</li>
+          <li>Family support resources</li>
+        </ul>
+        <a href="/fred/community.html" class="program-cta">Join Community</a>
+      </div>
+
+      <div class="program-card">
+        <div class="program-icon">🧭</div>
+        <h3>Resource Navigation</h3>
+        <p>Expert guidance to help you navigate healthcare systems, insurance, and available resources in your area.</p>
+        <ul class="program-features">
+          <li>Insurance navigation</li>
+          <li>Healthcare coordination</li>
+          <li>Benefit optimization</li>
+          <li>Resource mapping</li>
+        </ul>
+        <a href="/fred/resources.html" class="program-cta">Get Help</a>
+      </div>
+
+      <div class="program-card">
+        <div class="program-icon">📚</div>
+        <h3>Advocacy & Education</h3>
+        <p>Educational programs and advocacy support to help you understand your rights and access the services you deserve.</p>
+        <ul class="program-features">
+          <li>Rights education</li>
+          <li>Advocacy training</li>
+          <li>Legal resource referrals</li>
+          <li>Community outreach</li>
+        </ul>
+        <a href="/fred/resources.html" class="program-cta">Learn More</a>
+      </div>
+
+      <div class="program-card">
+        <div class="program-icon">🏃‍♂️</div>
+        <h3>Adaptive Sports</h3>
+        <p>Sports and recreation programs designed to help you stay active, build community, and discover new passions.</p>
+        <ul class="program-features">
+          <li>Wheelchair basketball</li>
+          <li>Adaptive cycling</li>
+          <li>Swimming programs</li>
+          <li>Fitness classes</li>
+        </ul>
+        <a href="/fred/community.html" class="program-cta">Get Active</a>
+      </div>
+    </section>
+
+    <!-- Eligibility Section -->
+    <section class="eligibility-section">
+      <div class="eligibility-content">
+        <h2>Eligibility & Application</h2>
+        <p>Our programs are designed for spinal cord injury survivors in Louisiana's Acadiana region. We believe everyone deserves access to mobility and independence.</p>
+        
+        <div class="eligibility-requirements">
+          <div class="requirement-item">
+            <h4>Residency</h4>
+            <p>Must be a resident of Louisiana's Acadiana region</p>
+          </div>
+          <div class="requirement-item">
+            <h4>Medical Documentation</h4>
+            <p>Verification of spinal cord injury diagnosis</p>
+          </div>
+          <div class="requirement-item">
+            <h4>Financial Need</h4>
+            <p>Demonstrated financial need for assistance</p>
+          </div>
+          <div class="requirement-item">
+            <h4>Application Process</h4>
+            <p>Complete application with supporting documents</p>
+          </div>
+        </div>
+        
+        <a href="/fred/connect.html" class="apply-button">Start Your Application</a>
+      </div>
+    </section>
+
+    <!-- Success Stories -->
+    <section class="success-stories">
+      <h2>Success Stories</h2>
+      <div class="stories-grid">
+        <div class="story-card">
+          <div class="story-avatar">DM</div>
+          <h4>DonMichael</h4>
+          <p>"Meauxbility helped me get my first wheelchair. I can finally get around independently and pursue my dreams."</p>
+          <span class="story-program">Mobility Grant</span>
+        </div>
+        <div class="story-card">
+          <div class="story-avatar">SJ</div>
+          <h4>Sarah Johnson</h4>
+          <p>"The home modifications made such a difference. I can now access every room in my house safely and comfortably."</p>
+          <span class="story-program">Accessibility Services</span>
+        </div>
+        <div class="story-card">
+          <div class="story-avatar">MR</div>
+          <h4>Mike Rodriguez</h4>
+          <p>"The peer support network connected me with others who understand my journey. I'm not alone anymore."</p>
+          <span class="story-program">Peer Support</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+      <div class="faq-content">
+        <h2>Frequently Asked Questions</h2>
+        
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFAQ(this)">
+            <span>How do I apply for a mobility grant?</span>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">
+            <p>Start by completing our online application form. You'll need to provide medical documentation, financial information, and a detailed explanation of your needs. Our team will review your application and contact you within 2-3 business days.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFAQ(this)">
+            <span>What types of equipment are covered?</span>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">
+            <p>We cover wheelchairs, adaptive vehicles, home modifications, assistive technology, and other mobility aids. Each application is evaluated based on individual needs and available funding.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFAQ(this)">
+            <span>How long does the application process take?</span>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">
+            <p>Most applications are processed within 2-4 weeks. Emergency situations may be expedited. We'll keep you updated throughout the process.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFAQ(this)">
+            <span>Is there a limit to how much assistance I can receive?</span>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">
+            <p>Grant amounts vary based on need and available funding. Most grants range from $500 to $5,000. We work with you to find the best solution within our budget.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFAQ(this)">
+            <span>Can I apply for multiple programs?</span>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">
+            <p>Yes! Many of our participants benefit from multiple programs. We encourage you to explore all available resources that can help improve your quality of life.</p>
+          </div>
     </div>
   </div>
+    </section>
 </main>
-
+  <!-- Footer will be injected here by load-components.js -->
+  
+  <script>
+    function toggleFAQ(element) {
+      const answer = element.nextElementSibling;
+      const toggle = element.querySelector('.faq-toggle');
+      
+      if (answer.classList.contains('active')) {
+        answer.classList.remove('active');
+        toggle.classList.remove('active');
+      } else {
+        // Close all other FAQs
+        document.querySelectorAll('.faq-answer.active').forEach(item => {
+          item.classList.remove('active');
+        });
+        document.querySelectorAll('.faq-toggle.active').forEach(item => {
+          item.classList.remove('active');
+        });
+        
+        // Open this FAQ
+        answer.classList.add('active');
+        toggle.classList.add('active');
+      }
+    }
+  </script>
 </body>
 </html>

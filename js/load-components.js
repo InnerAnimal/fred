@@ -19,10 +19,23 @@ async function initComponents() {
   // Load header
   await loadComponent('header', 'afterbegin');
   
+  // Load footer
+  await loadComponent('footer', 'beforeend');
+  
   // Initialize navigation after header loads
   const navScript = document.createElement('script');
   navScript.src = `${BASE_PATH}/js/navigation.js`;
   document.head.appendChild(navScript);
+  
+  // Initialize footer functionality
+  const footerScript = document.createElement('script');
+  footerScript.src = `${BASE_PATH}/js/footer.js`;
+  document.head.appendChild(footerScript);
+  
+  // Initialize donate modal
+  const donateModalScript = document.createElement('script');
+  donateModalScript.src = `${BASE_PATH}/js/donate-modal.js`;
+  document.head.appendChild(donateModalScript);
 }
 
 // Run when DOM is ready
