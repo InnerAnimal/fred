@@ -1,401 +1,336 @@
-// Donate Modal JavaScript - Meauxbility
-// This file contains the Stripe payment modal functionality
-// Uses environment variables for API keys
-
-(function() {
+// Enhanced Donation Modal with Stripe Integration
+(() => {
   'use strict';
 
-  // Stripe Configuration
-  const STRIPE_CONFIG = {
-    publishableKey: process?.env?.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || 'pk_live_51S4R0SRW56Pm3uYI8EKbysm1ok4peVXSD6G17HtFy8BDuG9Carn8Ry7iPVzulMBtdEFcz5pFvXpE04CIgn8PY6WS00aXOqMYEI',
-    backendUrl: 'https://shhh-ox7c.onrender.com/donations'
-  };
-
-  // Payment Modal Controller
-  class DonateModalController {
+  class MbxPaymentController {
     constructor() {
       this.stripe = null;
       this.elements = null;
-      this.card = null;
-      this.amount = 250;
-      this.frequency = 'one_time';
-      this.isInitialized = false;
+      this.cardElement = null;
+      this.currentAmount = 250;
+      this.currentFrequency = 'one_time';
+      this.isProcessing = false;
+      
+      this.init();
     }
 
-    async initialize() {
-      if (this.isInitialized) return;
-      
+    async init() {
       try {
-        // Load Stripe if not already loaded
-        if (typeof Stripe === 'undefined') {
-          await this.loadStripe();
-        }
-        
-        this.stripe = Stripe(STRIPE_CONFIG.publishableKey);
-        this.elements = this.stripe.elements();
-        
-        this.card = this.elements.create('card', {
-          style: {
-            base: {
-              fontSize: '14px',
-              color: '#fff',
-              fontFamily: 'Inter, sans-serif',
-              '::placeholder': {
-                color: 'rgba(255,255,255,0.5)'
-              }
-            },
-            invalid: {
-              color: '#ff6b6b'
-            }
-          }
-        });
-        
-        this.isInitialized = true;
-        console.log('✅ Donate Modal initialized');
-      } catch (error) {
-        console.error('❌ Failed to initialize donate modal:', error);
-      }
-    }
-
-    async loadStripe() {
-      return new Promise((resolve, reject) => {
+        // Initialize Stripe
         if (typeof Stripe !== 'undefined') {
-          resolve();
-          return;
+          this.stripe = Stripe('pk_live_51S4R0SRW56Pm3uYI8EKbysm1ok4peVXSD6G17HtFy8BDuG9Carn8Ry7iPVzulMBtdEFcz5pFvXpE04CIgn8PY6WS00aXOqMYEI');
+          
+          // Initialize Elements
+          this.elements = this.stripe.elements({
+            appearance: {
+              theme: 'dark',
+              variables: {
+                colorPrimary: '#9945FF',
+                colorBackground: 'rgba(26,74,82,0.3)',
+                colorText: '#ffffff',
+                colorDanger: '#ff6b6b',
+                fontFamily: 'Inter, sans-serif',
+                spacingUnit: '4px',
+                borderRadius: '10px'
+              }
+            }
+          });
+
+          // Create card element
+          this.cardElement = this.elements.create('card', {
+            style: {
+              base: {
+                fontSize: '14px',
+                color: '#ffffff',
+                '::placeholder': {
+                  color: 'rgba(255,255,255,0.5)'
+                }
+              }
+            }
+          });
+
+          // Mount card element
+          const cardContainer = document.getElementById('mbx-card-element');
+          if (cardContainer) {
+            this.cardElement.mount(cardContainer);
+            
+            // Handle real-time validation
+            this.cardElement.on('change', (event) => {
+              const displayError = document.getElementById('mbxCardErr');
+              if (event.error) {
+                displayError.textContent = event.error.message;
+                displayError.classList.add('show');
+              } else {
+                displayError.textContent = '';
+                displayError.classList.remove('show');
+              }
+            });
+          }
+
+          console.log('✅ Stripe initialized successfully');
+        } else {
+          console.warn('⚠️ Stripe not loaded');
         }
-        
-        const script = document.createElement('script');
-        script.src = 'https://js.stripe.com/v3/';
-        script.onload = resolve;
-        script.onerror = reject;
-        document.head.appendChild(script);
-      });
-    }
-
-    async open() {
-      await this.initialize();
-      
-      const backdrop = document.getElementById('mbxModalBackdrop');
-      if (!backdrop) return;
-      
-      // Mount card element if not already mounted
-      const cardElement = document.getElementById('mbx-card-element');
-      if (cardElement && !cardElement.hasChildNodes()) {
-        this.card.mount('#mbx-card-element');
-        
-        this.card.on('change', (event) => {
-          this.handleCardChange(event);
-        });
-      }
-      
-      backdrop.classList.add('active');
-      backdrop.setAttribute('aria-hidden', 'false');
-      document.body.style.overflow = 'hidden';
-      
-      // Focus first input
-      const firstNameInput = document.getElementById('mbxFirstName');
-      if (firstNameInput) {
-        setTimeout(() => firstNameInput.focus(), 100);
+      } catch (error) {
+        console.error('❌ Stripe initialization failed:', error);
       }
     }
 
-    close() {
-      const backdrop = document.getElementById('mbxModalBackdrop');
-      if (!backdrop) return;
-      
-      backdrop.classList.remove('active');
-      backdrop.setAttribute('aria-hidden', 'true');
-      document.body.style.overflow = '';
-      
-      this.reset();
-    }
-
-    handleCardChange(event) {
-      const errorElement = document.getElementById('mbxCardErr');
-      if (!errorElement) return;
-      
-      if (event.error) {
-        errorElement.textContent = event.error.message;
-        errorElement.classList.add('show');
-      } else {
-        errorElement.classList.remove('show');
-      }
-    }
-
-    selectAmount(amount) {
-      this.amount = amount;
-      
-      // Update UI
-      document.querySelectorAll('.mbx-amount-btn').forEach(btn => {
-        btn.classList.remove('selected');
-      });
-      
-      if (event && event.target) {
-        event.target.classList.add('selected');
-      }
-      
-      // Clear custom amount
-      const customInput = document.querySelector('.mbx-custom-amount');
-      if (customInput) {
-        customInput.value = '';
-      }
-    }
-
-    selectCustomAmount(value) {
-      if (value && value > 0) {
-        this.amount = parseFloat(value);
-        
-        // Remove selection from preset buttons
-        document.querySelectorAll('.mbx-amount-btn').forEach(btn => {
-          btn.classList.remove('selected');
-        });
-      }
+    setAmount(amount) {
+      this.currentAmount = amount;
+      this.updateAmountButtons();
     }
 
     setFrequency(frequency) {
-      this.frequency = frequency;
-      
-      // Update UI
-      document.querySelectorAll('.mbx-frequency-btn').forEach(btn => {
-        btn.classList.remove('active');
-      });
-      
-      if (event && event.target) {
-        event.target.classList.add('active');
-      }
+      this.currentFrequency = frequency;
+      this.updateFrequencyButtons();
     }
 
-    validateForm() {
-      let isValid = true;
-      
-      // Required fields
-      const requiredFields = ['mbxFirstName', 'mbxLastName', 'mbxEmail'];
-      
-      requiredFields.forEach(fieldId => {
-        const field = document.getElementById(fieldId);
-        const error = document.getElementById(fieldId + 'Err');
-        
-        if (!field || !field.value.trim()) {
-          if (error) {
-            error.classList.add('show');
-          }
-          isValid = false;
-        } else {
-          if (error) {
-            error.classList.remove('show');
-          }
+    updateAmountButtons() {
+      const buttons = document.querySelectorAll('.mbx-amount-btn');
+      buttons.forEach(btn => {
+        btn.classList.remove('selected');
+        if (parseInt(btn.textContent.replace(/[^0-9]/g, '')) === this.currentAmount) {
+          btn.classList.add('selected');
         }
       });
-      
-      // Email validation
-      const emailField = document.getElementById('mbxEmail');
-      const emailError = document.getElementById('mbxEmailErr');
-      
-      if (emailField && emailField.value) {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(emailField.value)) {
-          if (emailError) {
-            emailError.classList.add('show');
-          }
-          isValid = false;
+    }
+
+    updateFrequencyButtons() {
+      const buttons = document.querySelectorAll('.mbx-frequency-btn');
+      buttons.forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.textContent.toLowerCase().includes(this.currentFrequency.replace('_', ' '))) {
+          btn.classList.add('active');
         }
-      }
-      
-      return isValid;
+      });
     }
 
     async processPayment() {
-      if (!this.validateForm()) {
-        return;
-      }
+      if (this.isProcessing) return;
       
-      const submitButton = document.querySelector('.mbx-donate-submit');
-      const submitText = document.querySelector('.mbx-submit-text');
+      this.isProcessing = true;
+      const submitBtn = document.querySelector('.mbx-donate-submit');
       const loading = document.getElementById('mbxLoading');
+      const submitText = document.querySelector('.mbx-submit-text');
       
-      if (!submitButton || !submitText || !loading) return;
-      
-      // Show loading state
-      submitButton.disabled = true;
-      submitText.style.display = 'none';
-      loading.classList.add('active');
-      
+      if (!submitBtn || !loading || !submitText) return;
+
       try {
+        // Show loading state
+        submitBtn.disabled = true;
+        submitText.style.display = 'none';
+        loading.classList.add('active');
+
+        // Get form data
+        const firstName = document.getElementById('mbxFirstName')?.value;
+        const lastName = document.getElementById('mbxLastName')?.value;
+        const email = document.getElementById('mbxEmail')?.value;
+        const designation = document.getElementById('mbxDesignation')?.value;
+        
+        // Validate required fields
+        if (!firstName || !lastName || !email) {
+          throw new Error('Please fill in all required fields');
+        }
+
+        if (!this.stripe || !this.cardElement) {
+          throw new Error('Payment system not initialized');
+        }
+
         // Create payment intent
-        const response = await fetch(STRIPE_CONFIG.backendUrl, {
+        const response = await fetch('https://shhh-ox7c.onrender.com/donations', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Idempotency-Key': `don_${Date.now()}_${Math.random()}`
           },
           body: JSON.stringify({
-            fund: document.getElementById('mbxDesignation')?.value || 'general',
-            frequency: this.frequency,
-            amount: this.amount,
-            currency: 'usd',
-            metadata: {
-              firstName: document.getElementById('mbxFirstName')?.value || '',
-              lastName: document.getElementById('mbxLastName')?.value || '',
-              email: document.getElementById('mbxEmail')?.value || ''
-            }
+            amount: this.currentAmount * 100, // Convert to cents
+            frequency: this.currentFrequency,
+            firstName,
+            lastName,
+            email,
+            designation,
+            currency: 'usd'
           })
         });
-        
+
         if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
+          throw new Error('Payment processing failed');
         }
-        
+
         const { clientSecret } = await response.json();
-        
+
         // Confirm payment
         const { error, paymentIntent } = await this.stripe.confirmCardPayment(clientSecret, {
           payment_method: {
-            card: this.card,
+            card: this.cardElement,
             billing_details: {
-              name: `${document.getElementById('mbxFirstName')?.value || ''} ${document.getElementById('mbxLastName')?.value || ''}`.trim(),
-              email: document.getElementById('mbxEmail')?.value || ''
+              name: `${firstName} ${lastName}`,
+              email: email
             }
           }
         });
-        
+
         if (error) {
           throw new Error(error.message);
         }
-        
-        if (paymentIntent && paymentIntent.status === 'succeeded') {
+
+        if (paymentIntent.status === 'succeeded') {
+          // Show success message
           this.showSuccess();
+        } else {
+          throw new Error('Payment was not completed');
         }
-        
+
       } catch (error) {
         console.error('Payment error:', error);
         alert(`Payment failed: ${error.message}`);
       } finally {
-        // Reset loading state
-        submitButton.disabled = false;
+        // Reset button state
+        submitBtn.disabled = false;
         submitText.style.display = 'inline';
         loading.classList.remove('active');
+        this.isProcessing = false;
       }
     }
 
     showSuccess() {
-      const successMessage = document.getElementById('mbxSuccessMsg');
-      if (successMessage) {
-        successMessage.classList.add('show');
-        setTimeout(() => this.close(), 3000);
+      const successMsg = document.getElementById('mbxSuccessMsg');
+      const donateGrid = document.querySelector('.mbx-donate-grid');
+      
+      if (successMsg) {
+        successMsg.classList.add('show');
+      }
+      
+      if (donateGrid) {
+        donateGrid.style.display = 'none';
+      }
+      
+      // Auto-close modal after 3 seconds
+      setTimeout(() => {
+        this.closeModal();
+      }, 3000);
+    }
+
+    closeModal() {
+      const modal = document.getElementById('mbxModalBackdrop');
+      if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+        
+        // Reset form
+        this.resetForm();
       }
     }
 
-    reset() {
-      // Clear form fields
-      document.querySelectorAll('.mbx-form-input').forEach(input => {
-        input.value = '';
-      });
+    resetForm() {
+      // Reset form fields
+      const inputs = document.querySelectorAll('.mbx-form-input, .mbx-custom-amount');
+      inputs.forEach(input => input.value = '');
       
-      // Clear errors
-      document.querySelectorAll('.mbx-error').forEach(error => {
-        error.classList.remove('show');
-      });
+      // Reset amount selection
+      this.currentAmount = 250;
+      this.updateAmountButtons();
+      
+      // Reset frequency
+      this.currentFrequency = 'one_time';
+      this.updateFrequencyButtons();
+      
+      // Clear card element
+      if (this.cardElement) {
+        this.cardElement.clear();
+      }
       
       // Hide success message
-      const successMessage = document.getElementById('mbxSuccessMsg');
-      if (successMessage) {
-        successMessage.classList.remove('show');
+      const successMsg = document.getElementById('mbxSuccessMsg');
+      const donateGrid = document.querySelector('.mbx-donate-grid');
+      
+      if (successMsg) {
+        successMsg.classList.remove('show');
       }
       
-      // Clear card
-      if (this.card) {
-        this.card.clear();
+      if (donateGrid) {
+        donateGrid.style.display = 'grid';
       }
-      
-      // Reset amount and frequency
-      this.amount = 250;
-      this.frequency = 'one_time';
-      
-      // Reset UI
-      document.querySelectorAll('.mbx-amount-btn').forEach(btn => {
-        btn.classList.remove('selected');
-      });
-      document.querySelectorAll('.mbx-frequency-btn').forEach(btn => {
-        btn.classList.remove('active');
-      });
-      
-      // Set default selections
-      const defaultAmountBtn = document.querySelector('.mbx-amount-btn[onclick*="250"]');
-      const defaultFreqBtn = document.querySelector('.mbx-frequency-btn[onclick*="one_time"]');
-      
-      if (defaultAmountBtn) defaultAmountBtn.classList.add('selected');
-      if (defaultFreqBtn) defaultFreqBtn.classList.add('active');
     }
   }
 
-  // Global instance
-  let donateModal = null;
+  // Global payment controller instance
+  let paymentController = null;
 
-  // Initialize when DOM is ready
-  document.addEventListener('DOMContentLoaded', function() {
-    donateModal = new DonateModalController();
-    
-    // Set up event listeners
-    setupEventListeners();
+  // Initialize payment controller when DOM is ready
+  function initPaymentController() {
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => {
+        paymentController = new MbxPaymentController();
+      });
+    } else {
+      paymentController = new MbxPaymentController();
+    }
+  }
+
+  // Global functions for donation modal
+  window.openDonateModal = function() {
+    const modal = document.getElementById('mbxModalBackdrop');
+    if (modal) {
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      
+      // Initialize payment controller if not already done
+      if (!paymentController) {
+        paymentController = new MbxPaymentController();
+      }
+    }
+  };
+
+  window.closeDonateModal = function() {
+    if (paymentController) {
+      paymentController.closeModal();
+    }
+  };
+
+  window.setMbxFrequency = function(frequency) {
+    if (paymentController) {
+      paymentController.setFrequency(frequency);
+    }
+  };
+
+  window.selectMbxAmount = function(amount) {
+    if (paymentController) {
+      paymentController.setAmount(amount);
+    }
+  };
+
+  window.selectMbxCustom = function(value) {
+    if (value && value > 0 && paymentController) {
+      paymentController.setAmount(parseFloat(value));
+    }
+  };
+
+  window.processMbxDonation = function() {
+    if (paymentController) {
+      paymentController.processPayment();
+    }
+  };
+
+  // Close modal on backdrop click
+  document.addEventListener('click', (e) => {
+    if (e.target.classList.contains('mbx-modal-backdrop')) {
+      closeDonateModal();
+    }
   });
 
-  function setupEventListeners() {
-    // Backdrop click to close
-    const backdrop = document.getElementById('mbxModalBackdrop');
-    if (backdrop) {
-      backdrop.addEventListener('click', (e) => {
-        if (e.target === e.currentTarget) {
-          closeDonateModal();
-        }
-      });
-    }
-
-    // Escape key to close
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        const backdrop = document.getElementById('mbxModalBackdrop');
-        if (backdrop && backdrop.classList.contains('active')) {
-          closeDonateModal();
-        }
+  // Close modal on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      const modal = document.getElementById('mbxModalBackdrop');
+      if (modal && modal.classList.contains('active')) {
+        closeDonateModal();
       }
-    });
-  }
-
-  // Global functions for HTML onclick handlers
-  window.openDonateModal = () => {
-    if (donateModal) {
-      donateModal.open();
     }
-  };
+  });
 
-  window.closeDonateModal = () => {
-    if (donateModal) {
-      donateModal.close();
-    }
-  };
-
-  window.selectMbxAmount = (amount) => {
-    if (donateModal) {
-      donateModal.selectAmount(amount);
-    }
-  };
-
-  window.selectMbxCustom = (value) => {
-    if (donateModal) {
-      donateModal.selectCustomAmount(value);
-    }
-  };
-
-  window.setMbxFrequency = (frequency) => {
-    if (donateModal) {
-      donateModal.setFrequency(frequency);
-    }
-  };
-
-  window.processMbxDonation = () => {
-    if (donateModal) {
-      donateModal.processPayment();
-    }
-  };
+  // Initialize payment controller
+  initPaymentController();
 
 })();
