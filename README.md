@@ -48,7 +48,7 @@ Empowering spinal cord injury survivors with mobility, independence, and hope th
 
 ### 💳 Payment Integration
 - **Stripe Integration** - Secure donation processing
-- **Backend:** https://shhh-ox7c.onrender.com/donations
+- **Backend:** https://thisisntfinishedweneedtosetthisup
 - **Environment Variables:** Uses `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY`
 
 ## 🛠️ Technical Stack
